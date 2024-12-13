@@ -1,4 +1,5 @@
 import MONTH from '../constants/Month.js';
+import Holiday from '../constants/Holiday.js';
 
 class Calendar {
   constructor(month, day) {
@@ -6,6 +7,7 @@ class Calendar {
     this.days = [];
     this.calculateDays(month);
     this.calculateHoliday(day);
+    this.makeSpecialHoliday(month);
   }
 
   calculateDays(month) {
@@ -67,6 +69,20 @@ class Calendar {
           this.days[index] = 1;
         }
       });
+    }
+  }
+
+  makeSpecialHoliday(month) {
+    for (const key in Holiday) {
+      if (month === key && this.days[Holiday[key] - 1] === 0) {
+        this.days[Holiday[key] - 1] = 2;
+      }
+    }
+    if (month === '10' && this.days[2] === 0) {
+      this.days[2] = 2;
+    }
+    if (month === '10' && this.days[8] === 0) {
+      this.days[8] = 2;
     }
   }
 }
